@@ -27,6 +27,25 @@
         #game-over-text {font-size:2.5rem; color:#ff00cc; margin-bottom:20px; text-shadow:0 0 10px rgba(255,0,204,0.7);}
         #final-score {font-size:2rem; color:white; margin-bottom:30px;}
 
+        /* キー操作説明 */
+        #controls-info {
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ff00cc;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+        #controls-info div {
+            margin: 2px 0;
+            color: #fff;
+        }
+        #controls-info .key {
+            color: #ff00cc;
+            font-weight: bold;
+        }
+
         /* モバイル制約の対応 */
         @media (max-height: 600px) {
             h1 {font-size:1.5rem; margin:2px 0;}
@@ -69,6 +88,11 @@
                 <div id="next-piece">
                     <div class="label">次のピース</div>
                     <div id="next-piece-container"></div>
+                    <div id="controls-info">
+                        <div><span class="key">←→</span> 移動 / <span class="key">↑</span> 回転</div>
+                        <div><span class="key">↓</span> 高速落下 / <span class="key">スペース</span> 即時落下</div>
+                        <div><span class="key">P</span> 一時停止</div>
+                    </div>
                 </div>
                 
                 <div id="stats">
@@ -106,8 +130,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const ROWS = 20, COLS = 10;
             const EMPTY = 'rgba(18, 18, 18, 0.8)';
-            const COLORS = ['#FF00CC', '#3333FF', '#FFCC00', '#00CCFF', '#00FF66', '#FF3366', '#CC33FF'];
-            const SHAPES = [
+            const BLOCK_COLORS = ['#FF00CC', '#3333FF', '#FFCC00', '#00CCFF', '#00FF66', '#FF3366', '#CC33FF'];
+            const BLOCK_SHAPES = [
                 [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
                 [[2,0,0],[2,2,2],[0,0,0]], // J
                 [[0,0,3],[3,3,3],[0,0,0]], // L
@@ -322,8 +346,8 @@
             }
             
             function randomPiece() {
-                const randomIndex = Math.floor(Math.random() * SHAPES.length);
-                return new Piece(SHAPES[randomIndex], COLORS[randomIndex]);
+                const randomIndex = Math.floor(Math.random() * BLOCK_SHAPES.length);
+                return new Piece(BLOCK_SHAPES[randomIndex], BLOCK_COLORS[randomIndex]);
             }
             
             function removeRows() {
